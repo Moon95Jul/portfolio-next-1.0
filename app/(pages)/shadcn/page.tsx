@@ -13,20 +13,34 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 
+type myAlertVariant = 'info' | 'success' | 'warn' | 'error'
+
 export default function ShadcnPage() {
+    const myAlerts: { variant: myAlertVariant }[] = [
+        { variant: 'info' },
+        { variant: 'success' },
+        { variant: 'warn' },
+        { variant: 'error' }
+    ]
+
     return (
         <div className="p-20 space-y-12">
             <div className="space-y-8">
                 <div className="text-3xl font-bold"> Alert </div>
-                <Alert variant='success'>
-                    <CheckCircle2Icon/>
-                    <AlertTitle>
-                        Success! Your changes have been saved
-                    </AlertTitle>
-                    <AlertDescription>
-                    This is an alert with icon, title and description.
-                    </AlertDescription>
-                </Alert>
+                {
+                    myAlerts.map((myAlert, i) => (
+                        <Alert key={i} variant={myAlert.variant}>
+                            <CheckCircle2Icon/>
+                            <AlertTitle>
+                                { myAlert.variant } Alert Title
+                            </AlertTitle>
+                            <AlertDescription>
+                                { myAlert.variant } Alert AlertDescription
+                            </AlertDescription>
+                        </Alert>
+                    ))
+                }
+
                 <Alert>
                     <PopcornIcon/>
                     <AlertTitle>
