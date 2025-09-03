@@ -1,3 +1,5 @@
+'use client'
+
 import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon, DotIcon } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import {
@@ -12,6 +14,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { toast } from "@/components/system/toast"
 
 type myAlertVariant = 'info' | 'success' | 'warn' | 'error'
 
@@ -93,6 +96,32 @@ export default function ShadcnPage() {
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
+            </div>
+
+            <div className="space-y-8">
+                <div className="text-3xl font-bold"> Toaster (Sonner) </div>
+                <div className="grid grid-cols-4 gap-3">
+                    <Button onClick={() => { toast('hello!!') }}> Default </Button>
+
+                    <Button onClick={() => { toast.success('success') }}> success </Button>
+
+                    <Button onClick={() => { toast.error('에러가 발생했습니다', {
+                        description: '에러가 발생했습니다.'
+                    }) }}> error </Button>
+
+                    <Button onClick={async () => { 
+                        await toast.promise(
+                            new Promise((resolve, reject) =>
+                                setTimeout(Math.random() > 0.5?reject:resolve, 1500)
+                            ),
+                            {
+                                loading: '블로그 업로드 중입니다.',
+                                success: '블로그 업로드가 완료되었습니다.',
+                                error: '네트워크 에러가 발생했습니다.'
+                            }
+                        )
+                    }}> 블로그 업로드 </Button>
+                </div>
             </div>
         </div>
     )
