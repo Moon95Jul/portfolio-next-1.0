@@ -1,37 +1,48 @@
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from "lucide-react";
+"use client";
 
-export default function Home() {
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from "lucide-react";
+import { toast } from "sonner";
+
+export default function ShadcnPage() {
+  const myAlerts = [
+    { variant: "info" },
+    { variant: "success" },
+    { variant: "warn" },
+    { variant: "error" },
+  ];
+
   return (
     <div>
       <div className="text-3xl font-bold"> Alert </div>
-      <div className="grid w-full max-w-xl items-start gap-4">
-        <Alert>
-          <CheckCircle2Icon />
-          <AlertTitle>Success! Your changes have been saved</AlertTitle>
+      {myAlerts.map((myAlert, i) => (
+        <Alert
+          key={i}
+          variant={myAlert.variant as "info" | "success" | "warn" | "error"}
+        >
+          <CheckCircle2Icon></CheckCircle2Icon>
+          <AlertTitle>{myAlert.variant} Alert Title</AlertTitle>
           <AlertDescription>
-            This is an alert with icon, title and description.
+            {myAlert.variant} Alert AlertDescription
           </AlertDescription>
         </Alert>
-        <Alert>
-          <PopcornIcon />
-          <AlertTitle>
-            This Alert has a title and an icon. No description.
-          </AlertTitle>
-        </Alert>
-        <Alert variant="destructive">
-          <AlertCircleIcon />
-          <AlertTitle>Unable to process your payment.</AlertTitle>
-          <AlertDescription>
-            <p>Please verify your billing information and try again.</p>
-            <ul className="list-inside list-disc text-sm">
-              <li>Check your card details</li>
-              <li>Ensure sufficient funds</li>
-              <li>Verify billing address</li>
-            </ul>
-          </AlertDescription>
-        </Alert>
-      </div>
+      ))}
+
+      <Button
+        variant="outline"
+        onClick={() =>
+          toast("Event has been created", {
+            description: "Sunday, December 03, 2023 at 9:00 AM",
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          })
+        }
+      >
+        Show Toast
+      </Button>
     </div>
   );
 }
