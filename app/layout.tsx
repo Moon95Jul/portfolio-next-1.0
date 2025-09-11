@@ -1,7 +1,7 @@
-import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import GlobalToaster from "@/components/system/globalToaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "포트폴리오",
-  description: "포트폴리오 서비스 입니다.",
+  description: "포트폴리오 서비스입니다",
 };
 
 export default function RootLayout({
@@ -29,7 +29,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <Toaster position="top-center" />
+        <GlobalToaster />
       </body>
     </html>
   );
