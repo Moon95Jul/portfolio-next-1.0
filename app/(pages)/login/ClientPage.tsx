@@ -1,12 +1,23 @@
 'use client'
 
+import AppShell from "@/components/grid/appShell"
+import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
+
 export default function ClientPage() {
+    const router = useRouter()
+
     return (
-        <div>
-            로그인 페이지입니다
-            <div>
-            http://localhost:3000/login 으로 접속할 수 있습니다
+        <AppShell>
+            <div className="flex justify-center pt-8">
+                <div className="p-12 space-y-8 flex flex-col border-1 shadow-xs">
+                    <Button onClick={() => router.push('/login/email')}> 
+                        <div className="text-2xl font-semibold"> 이메일로 로그인 </div>
+                    </Button>
+                    <Button> 카카오 로그인 </Button>
+                    <Button> 네이버 로그인 </Button>
+                </div>
             </div>
-        </div>
+        </AppShell>
     )
 }
