@@ -1,27 +1,26 @@
-import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 const alertVariants = cva(
-  "relative w-full rounded-lg border px-6 py-5 text-lg flex items-center gap-4",
+  "relative w-full rounded-lg border px-4 py-3 text-sm grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
   {
     variants: {
       variant: {
         default: "bg-card text-card-foreground",
-        destructive:
-          "text-destructive bg-card [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90",
-        info: "bg-blue-50 text-blue-600 border-blue-400",
-        success: "bg-green-50 text-green-700 border-green-400",
-        warn: "bg-orange-50 text-orange-600 border-orange-400",
-        error: "bg-red-50 text-red-600 border-red-400",
+        destructive: "text-destructive bg-card [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90",
+        info: "bg-info-100 text-info border-info",
+        success: "bg-success-100 text-success border-success",
+        warn: "bg-warn-100 text-warn border-warn",
+        error: "bg-error-100 text-error border-error",
       },
     },
     defaultVariants: {
       variant: "default",
     },
   }
-);
+)
 
 function Alert({
   className,
@@ -35,17 +34,20 @@ function Alert({
       className={cn(alertVariants({ variant }), className)}
       {...props}
     />
-  );
+  )
 }
 
 function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="alert-title"
-      className={cn("font-bold text-lg", className)}
+      className={cn(
+        "col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight",
+        className
+      )}
       {...props}
     />
-  );
+  )
 }
 
 function AlertDescription({
@@ -61,7 +63,7 @@ function AlertDescription({
       )}
       {...props}
     />
-  );
+  )
 }
 
-export { Alert, AlertTitle, AlertDescription };
+export { Alert, AlertTitle, AlertDescription }

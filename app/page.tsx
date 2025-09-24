@@ -1,14 +1,37 @@
 "use client";
 
+import TranslateScroll from "@/components/scroll/translateScroll";
 import { Button } from "@/components/ui/button";
-import { Grab, Grip, LogIn } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { ChevronLeft, ChevronRight, Grab, Grip, LogIn } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 
 export default function Home() {
+  const router = useRouter();
+
   const translateRef = useRef<HTMLDivElement>(null);
   const [offset, setoffset] = useState(0);
   const movingX = 500;
+
+  const projects = [
+    {
+      title: "고양이 밥주기",
+      info: "자동으로 고양이 밥 주는 IOT",
+      color: "bg-red-100",
+    },
+    {
+      title: "맛집 추천 어플",
+      info: "우리동네 맛집을 알려주는 서비스",
+      color: "bg-blue-100",
+    },
+    {
+      title: "RPG 게임",
+      info: "최고로 재미있는 RPG 게임",
+      color: "bg-green-100",
+    },
+  ];
 
   const disabledNext = useMemo(() => {
     if (!translateRef.current) {
@@ -45,7 +68,15 @@ export default function Home() {
             <Button variant="ghost"> PROJECT </Button>
             <Button variant="ghost"> ALGORITHM </Button>
             <Button variant="secondary" className="rounded-full">
-              <div className="font-bold"> Today I Learned </div>
+              <div
+                className="font-bold"
+                onClick={() => {
+                  router.push("/til");
+                }}
+              >
+                {" "}
+                Today I Learned{" "}
+              </div>
             </Button>
           </div>
           <div>
@@ -103,29 +134,29 @@ export default function Home() {
         </section>
 
         <section className="w-full flex justify-center">
-          <div className="w-full max-w-[1280px] bg-red-100">
-            <Button disabled={offset >= 0} onClick={() => move("prev")}>
-              {" "}
-              {"<"}{" "}
-            </Button>
-            <Button disabled={disabledNext} onClick={() => move("next")}>
-              {" "}
-              {">"}{" "}
-            </Button>
-            <div
-              ref={translateRef}
-              className="w-full flex overflow-x-visible space-x-8 will-change-transform"
-              style={{
-                transform: `translateX(${offset}px)`,
-                transition: "transform .35s ease",
-              }}
-            >
-              {new Array(20).fill(0).map((ele, i) => (
-                <div key={i} className="min-w-[300px] h-[200px] bg-slate-100">
-                  {i + 1}. 카드
-                </div>
-              ))}
+          <div className="w-full max-w-[1280px] space-y-4">
+            <div className="flex space-x-2">
+              <div className="text-2xl font-bold">
+                {" "}
+                더 나은 미래를 만드는 나의 기술 이야기
+              </div>
+              <div className="flex-auto"></div>
+              <Button
+                size="icon"
+                disabled={offset >= 0}
+                onClick={() => move("prev")}
+              >
+                <ChevronLeft></ChevronLeft>
+              </Button>
+              <Button
+                size="icon"
+                disabled={disabledNext}
+                onClick={() => move("next")}
+              >
+                <ChevronRight />
+              </Button>
             </div>
+            <TranslateScroll items={projects}></TranslateScroll>
           </div>
         </section>
       </div>
