@@ -121,7 +121,7 @@ export default function RegisterPage() {
             {password !== repassword && (
               <div className="text-red-500 pt-2 font-semibold">
                 {" "}
-                비민번호가 일치하지 않습니다.{" "}
+                비밀번호가 일치하지 않습니다.{" "}
               </div>
             )}
           </div>
