@@ -1,4 +1,5 @@
 import { User } from "@/types/user/user";
+import Project from "@/types/project/project";
 import axios from "axios";
 
 export interface ApiType {
@@ -12,6 +13,8 @@ export interface ApiType {
   ): Promise<number>;
   isValidNickname(nickname: string): Promise<boolean>;
   loginByEmail(email: string, password: string): Promise<string>;
+
+  getProject(): Promise<Project[]>;
 }
 
 export default function Api(): ApiType {
@@ -60,8 +63,12 @@ export default function Api(): ApiType {
         params: { nickname },
       });
     },
-    async loginByEmail(email: string, password: string) {
+    async loginByEmail(email: string, password: string): Promise<string> {
       return await api.post("/login-by-email", { email, password });
+    },
+
+    async getProject(): Promise<Project[]> {
+      return await api.get("/get-projects");
     },
   };
 }
