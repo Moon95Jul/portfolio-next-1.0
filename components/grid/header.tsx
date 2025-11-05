@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getCookie, deleteCookie } from "cookies-next";
+import { toast } from "sonner";
 
 export default function Header() {
   const router = useRouter();
@@ -25,6 +26,16 @@ export default function Header() {
     setIsLogin(false);
   };
 
+  const goToProject = () => {
+    const accessToken = getCookie("accessToken");
+    if (accessToken) {
+      router.push("/project");
+    } else {
+      toast.error("로그인이 필요합니다.");
+      router.push("/login");
+    }
+  };
+
   return (
     <header className="flex justify-center h-[64px]">
       <div className="w-full max-w-[1280px] flex justify-between items-center">
@@ -35,7 +46,7 @@ export default function Header() {
         <div className="flex space-x-4">
           <Button variant="ghost"> ABOUT </Button>
           <Button variant="ghost"> HISTORY </Button>
-          <Button variant="ghost" onClick={() => router.push("/project")}>
+          <Button variant="ghost" onClick={goToProject}>
             {" "}
             PROJECT{" "}
           </Button>

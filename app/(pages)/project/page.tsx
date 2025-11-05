@@ -10,16 +10,24 @@ export default function ProjectPage() {
 
   useEffect(() => {
     const init = async () => {
-      const res = await Api().getProject();
-      setProjects(res);
+      setProjects(await Api().getProject());
     };
     init();
   }, []);
 
   return (
     <AppShell>
-      여기는 프로젝트 페이지 입니다.
-      <div>{JSON.stringify(projects)}</div>
+      <div className="space-y-4">
+        {projects.map((project, i) => (
+          <div
+            className="border p-4 space-y-3 rounded-xl bg-slate-50 shadow-xs"
+            key={i}
+          >
+            <div className="text-xl font-semibold">{project.title}</div>
+            <div className="pt-2">{project.content}</div>
+          </div>
+        ))}
+      </div>
     </AppShell>
   );
 }
