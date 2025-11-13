@@ -14,6 +14,7 @@ export interface ApiType {
   ): Promise<number>;
   isValidNickname(nickname: string): Promise<boolean>;
   loginByEmail(email: string, password: string): Promise<string>;
+  loginByKakao(code: string): Promise<string>;
 
   getProject(): Promise<Project[]>;
 }
@@ -83,7 +84,11 @@ export default function Api(): ApiType {
     },
 
     async getProject(): Promise<Project[]> {
-      return await api.get("/get-projects");
+      return await api.get("/public/get-projects");
+    },
+
+    async loginByKakao(code: string): Promise<string> {
+      return await api.post("/public/login-by-kakao", { code });
     },
   };
 }
