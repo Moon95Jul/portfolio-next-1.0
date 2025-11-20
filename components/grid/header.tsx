@@ -12,7 +12,7 @@ export default function Header() {
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
-    const accessToken = getCookie("accessToken");
+    const accessToken = getCookie("Access-Token");
     if (accessToken) {
       setIsLogin(true);
     }
@@ -21,13 +21,13 @@ export default function Header() {
   const logout = () => {
     // 로그아웃
     // 1. acessToken 키로된 쿠키 지운다.
-    deleteCookie("accessToken");
+    deleteCookie("Access-Token");
     // 2. setIsLogin(false)
     setIsLogin(false);
   };
 
   const goToProject = () => {
-    const accessToken = getCookie("accessToken");
+    const accessToken = getCookie("Access-Token");
     if (accessToken) {
       router.push("/project");
     } else {

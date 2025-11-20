@@ -10,11 +10,13 @@ export interface ApiType {
     nickname: string,
     email: string,
     password: string,
-    repassword: string
+    repassword: string,
+    accessToken: string
   ): Promise<number>;
   isValidNickname(nickname: string): Promise<boolean>;
   loginByEmail(email: string, password: string): Promise<string>;
   loginByKakao(code: string): Promise<string>;
+  me(accessToken?: string): Promise<User>;
 
   getProject(): Promise<Project[]>;
 }
@@ -24,9 +26,9 @@ export default function Api(): ApiType {
 
   api.interceptors.request.use(
     (config) => {
-      const token = getCookie("accessToken");
+      const token = getCookie("Access-Token");
       if (token) {
-        config.headers["ACCESS-TOKEN"] = token;
+        config.headers["Access-Token"] = token;
       }
 
       return config;
@@ -65,22 +67,31 @@ export default function Api(): ApiType {
       nickname: string,
       email: string,
       password: string,
-      repassword: string
+      repassword: string,
+      accessToken: string
     ) {
-      return await api.post("/add-user", {
-        nickname,
-        email,
-        password,
-        repassword,
-      });
+      return await api.post(
+        "/add-user",
+        {
+          nickname,
+          email,
+          password,
+          repassword,
+        },
+        {
+          headers: {
+            "Access-Token": accessToken,
+          },
+        }
+      );
     },
     async isValidNickname(nickname: string): Promise<boolean> {
-      return await api.get("/is-valid-nickname", {
+      return await api.get("/public/is-valid-nickname", {
         params: { nickname },
       });
     },
     async loginByEmail(email: string, password: string): Promise<string> {
-      return await api.post("/login-by-email", { email, password });
+      return await api.post("/public/login-by-email", { email, password });
     },
 
     async getProject(): Promise<Project[]> {
@@ -89,6 +100,20 @@ export default function Api(): ApiType {
 
     async loginByKakao(code: string): Promise<string> {
       return await api.post("/public/login-by-kakao", { code });
+    },
+
+    async me(accessToken?: string): Promise<User> {
+      const token = accessToken || ((getCookie("Access-Token") || "") as string);
+
+      return await api.post(
+        "/me",
+        {},
+        {
+          headers: {
+            "Access-Token": token,
+          },
+        }
+      );
     },
   };
 }
