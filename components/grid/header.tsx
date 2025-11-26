@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getCookie, deleteCookie } from "cookies-next";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export default function Header() {
   const router = useRouter();
@@ -44,8 +45,14 @@ export default function Header() {
           Logo{" "}
         </div>
         <div className="flex space-x-4">
-          <Button variant="ghost"> ABOUT </Button>
-          <Button variant="ghost"> HISTORY </Button>
+          <Link href="/about">
+            {" "}
+            <Button variant="ghost"> ABOUT </Button>{" "}
+          </Link>
+          <Link href="/history">
+            <Button variant="ghost"> HISTORY </Button>
+          </Link>
+
           <Button variant="ghost" onClick={goToProject}>
             {" "}
             PROJECT{" "}
